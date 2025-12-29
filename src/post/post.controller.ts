@@ -27,7 +27,7 @@ export class PostController {
   }
 
   @Get(':id')
-  // ParseIntPipe を挟むと、数値じゃないIDが来た時に自動でエラーにしてくれる
+  // ParseIntPipe を挟むと、数値じゃない ID が来た時に自動でエラーにしてくれる
   findOne(@Param('id', ParseIntPipe) id: string) {
     return this.postService.findOne(+id);
   }

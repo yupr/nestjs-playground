@@ -8,13 +8,22 @@ export class PostService {
   constructor(private readonly prisma: PrismaService) {}
 
   create(createPostDto: CreatePostDto) {
+    const { authorEmail, ...postData } = createPostDto;
+
     return this.prisma.post.create({
-      data: createPostDto,
+      data: {
+        ...postData,
+        author: { connect: { email: authorEmail } },
+      },
     });
   }
 
   findAll() {
-    return this.prisma.post.findMany();
+    return this.prisma.post.findMany({
+      include: {
+        author: true,
+      },
+    });
   }
 
   findOne(id: number) {
